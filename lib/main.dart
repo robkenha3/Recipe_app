@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'view/searchRecipeBar.dart';
 
 import 'view/home.dart';
 
@@ -11,6 +12,6 @@ class RecipeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home());
+    return MaterialApp(home: SearchRecipeBar());
   }
 }
