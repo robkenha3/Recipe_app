@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Recipe {
   String name;
-  Icon img;
+  IconData img;
   int preparationTime;
   double avaliation;
 

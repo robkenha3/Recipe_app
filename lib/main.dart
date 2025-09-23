@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'view/searchRecipeBar.dart';
 
-import 'view/home.dart';
-
 void main() {
   runApp(RecipeApp());
 }
