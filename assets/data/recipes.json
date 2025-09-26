@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Lasanha",
+    "img": "Icons.food_bank",
+    "preparationTime": 60,
+    "avaliation": 5,
+    "quantity": 3,
+    "favorite": true,
+    "ingredients": ["massa", "presunto", "queijo"],
+    "instruction": ["cozinhar massa", "temperar carne"]
+  },
+  {
+    "name": "Strogonoff",
+    "img": "Icons.food_bank",
+    "preparationTime": 40,
+    "avaliation": 5
+  },
+  {
+    "name": "Feijoada",
+    "img": "Icons.food_bank",
+    "preparationTime": 120,
+    "avaliation": 4
+  },
+  {
+    "name": "Frango Frito",
+    "img": "Icons.food_bank",
+    "preparationTime": 45,
+    "avaliation": 5
+  },
+  {
+    "name": "Macarrão a Bolonhesa",
+    "img": "Icons.food_bank",
+    "preparationTime": 30,
+    "avaliation": 5
+  },
+  {
+    "name": "Galinhada",
+    "img": "Icons.food_bank",
+    "preparationTime": 80,
+    "avaliation": 5
+  },
+  {
+    "name": "Bife Acebolado",
+    "img": "Icons.food_bank",
+    "preparationTime": 40,
+    "avaliation": 4
+  }
+]

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_receitas/view/recipe_screen.dart';
 
 import 'home.dart';
 
@@ -15,32 +16,35 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.arrow_back_ios),
           backgroundColor: Color.fromARGB(70, 218, 218, 218),
-          title: TextField(
-            controller: textController,
-            onChanged: (value) => {setState(() {})},
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.0),
-                borderSide: const BorderSide(
-                  color: Colors.transparent,
-                  width: 0,
+          title: FractionallySizedBox(
+            widthFactor: 0.85,
+            child: TextField(
+              controller: textController,
+              onChanged: (value) => {setState(() {})},
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                  borderSide: const BorderSide(
+                    color: Colors.transparent,
+                    width: 0,
+                  ),
                 ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.0),
-                borderSide: const BorderSide(
-                  color: Colors.transparent,
-                  width: 0,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                  borderSide: const BorderSide(
+                    color: Colors.transparent,
+                    width: 0,
+                  ),
                 ),
+                filled: true,
+                fillColor: Color.fromRGBO(255, 254, 254, 1),
+                prefixIcon: Icon(Icons.search, color: Colors.black),
               ),
-              filled: true,
-              fillColor: Color.fromRGBO(255, 254, 254, 1),
-              prefixIcon: Icon(Icons.search, color: Colors.black),
             ),
           ),
 
@@ -58,7 +62,8 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
         body: TabBarView(
           children: [
             Home(),
-            Container(color: Colors.green),
+            RecipeScreen(),
+            // Container(color: Colors.green),
             Container(color: Colors.red),
             Container(color: Colors.green),
             Container(color: Colors.red),
