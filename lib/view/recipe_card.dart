@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_receitas/service/recipes_service.dart';
+import 'package:projeto_receitas/view/recipe_screen.dart';
 
 import '../model/recipe.dart';
 
@@ -13,15 +14,13 @@ class RecipeCard extends StatefulWidget {
 class _RecipeCardState extends State<RecipeCard> {
   RecipesService recipesService = RecipesService();
 
-  // Future<List<Recipe>> newRecipes = recipesService.readRecipe();
-
   List<Recipe> recipes = [
     Recipe(
       name: 'Lasanha',
       img: Icons.food_bank,
       preparationTime: 60,
       avaliation: 5,
-      quantity: 3,
+      quantity: 4,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -31,7 +30,7 @@ class _RecipeCardState extends State<RecipeCard> {
       img: Icons.food_bank,
       preparationTime: 40,
       avaliation: 5,
-      quantity: 3,
+      quantity: 2,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -41,7 +40,7 @@ class _RecipeCardState extends State<RecipeCard> {
       img: Icons.food_bank,
       preparationTime: 120,
       avaliation: 4,
-      quantity: 3,
+      quantity: 5,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -51,7 +50,7 @@ class _RecipeCardState extends State<RecipeCard> {
       img: Icons.food_bank,
       preparationTime: 45,
       avaliation: 5,
-      quantity: 3,
+      quantity: 1,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -71,7 +70,7 @@ class _RecipeCardState extends State<RecipeCard> {
       img: Icons.food_bank,
       preparationTime: 80,
       avaliation: 5,
-      quantity: 3,
+      quantity: 4,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -81,7 +80,7 @@ class _RecipeCardState extends State<RecipeCard> {
       img: Icons.food_bank,
       preparationTime: 40,
       avaliation: 4,
-      quantity: 3,
+      quantity: 2,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
       instruction: ["cozinhar massa", "temperar carne"],
@@ -130,16 +129,24 @@ class _RecipeCardState extends State<RecipeCard> {
 }
 
 class RecipeInfo extends StatelessWidget {
-  Recipe recipe;
+  final Recipe recipe;
 
-  RecipeInfo({super.key, required this.recipe});
+  const RecipeInfo({super.key, required this.recipe});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => {},
+        onTap: () => {
+          Navigator.of(context).push(
+            MaterialPageRoute<bool>(
+              builder: (BuildContext context) {
+                return RecipeScreen(recipe: recipe);
+              },
+            ),
+          ),
+        },
         child: Card(
           elevation: 5,
           child: Column(

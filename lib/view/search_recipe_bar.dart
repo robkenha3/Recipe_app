@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/view/recipe_screen.dart';
 
 import 'home.dart';
 
@@ -19,7 +18,7 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
       length: 6,
       child: Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back_ios),
+          // leading: Icon(Icons.arrow_back_ios),
           backgroundColor: Color.fromARGB(70, 218, 218, 218),
           title: FractionallySizedBox(
             widthFactor: 0.85,
@@ -62,8 +61,7 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
         body: TabBarView(
           children: [
             Home(),
-            RecipeScreen(),
-            // Container(color: Colors.green),
+            Container(color: Colors.green),
             Container(color: Colors.red),
             Container(color: Colors.green),
             Container(color: Colors.red),
