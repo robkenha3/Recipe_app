@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/service/recipes_service.dart';
 import 'package:projeto_receitas/view/recipe_screen.dart';
 
 import '../model/recipe.dart';
@@ -12,14 +11,12 @@ class RecipeCard extends StatefulWidget {
 }
 
 class _RecipeCardState extends State<RecipeCard> {
-  RecipesService recipesService = RecipesService();
-
   List<Recipe> recipes = [
     Recipe(
       name: 'Lasanha',
       img: Icons.food_bank,
       preparationTime: 60,
-      avaliation: 5,
+      rate: 5,
       quantity: 4,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -29,7 +26,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Strogonoff',
       img: Icons.food_bank,
       preparationTime: 40,
-      avaliation: 5,
+      rate: 5,
       quantity: 2,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -39,7 +36,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Feijoada',
       img: Icons.food_bank,
       preparationTime: 120,
-      avaliation: 4,
+      rate: 4,
       quantity: 5,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -49,7 +46,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Frango Frito',
       img: Icons.food_bank,
       preparationTime: 45,
-      avaliation: 5,
+      rate: 5,
       quantity: 1,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -59,7 +56,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Macarrão a bolonhesa',
       img: Icons.food_bank,
       preparationTime: 30,
-      avaliation: 5,
+      rate: 5,
       quantity: 3,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -69,7 +66,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Galinhada',
       img: Icons.food_bank,
       preparationTime: 80,
-      avaliation: 5,
+      rate: 5,
       quantity: 4,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -79,7 +76,7 @@ class _RecipeCardState extends State<RecipeCard> {
       name: 'Bife Acebolado',
       img: Icons.food_bank,
       preparationTime: 40,
-      avaliation: 4,
+      rate: 4,
       quantity: 2,
       favorite: true,
       ingredients: ["massa", "presunto", "queijo"],
@@ -87,9 +84,22 @@ class _RecipeCardState extends State<RecipeCard> {
     ),
   ];
 
+  updateRating(int index, int updatedRate) {
+    Recipe recipe = recipes[index];
+    recipes[index] = recipe.copyRecipe(updatedRate);
+    setState(() {});
+  }
+
   List<RecipeInfo> conversorRecipesToRecipeCard() {
-    List<RecipeInfo> newRecipes = recipes.map((el) {
-      return RecipeInfo(recipe: el);
+    List<RecipeInfo> newRecipes = recipes.asMap().entries.map((entry) {
+      int index = entry.key;
+      Recipe recipe = entry.value;
+      return RecipeInfo(
+        recipe: recipe,
+        onRatingChange: (value) {
+          updateRating(index, value);
+        },
+      );
     }).toList();
     return newRecipes;
   }
@@ -101,25 +111,32 @@ class _RecipeCardState extends State<RecipeCard> {
         // context faz busca na widget tree
         // constraints tem o tamanho da tela (maxWidth, maxHeight, minWidth, minHeight)
 
-        // tablet
+        // pc
         if (constraints.maxWidth >= 900) {
           return GridView.count(
             crossAxisCount: 3,
             childAspectRatio: 0.8,
             children: conversorRecipesToRecipeCard(),
           );
+          // tablet
         } else if (constraints.maxWidth >= 600) {
           return GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 0.8,
             children: conversorRecipesToRecipeCard(),
           );
+          // Celular
         } else {
           return ListView.builder(
             itemCount: recipes.length,
             itemBuilder: (context, int position) {
               int newPosition = position % recipes.length;
-              return RecipeInfo(recipe: recipes[newPosition]);
+              return RecipeInfo(
+                recipe: recipes[newPosition],
+                onRatingChange: (value) {
+                  updateRating(newPosition, value);
+                },
+              );
             },
           );
         }
@@ -130,8 +147,13 @@ class _RecipeCardState extends State<RecipeCard> {
 
 class RecipeInfo extends StatelessWidget {
   final Recipe recipe;
+  final Function onRatingChange;
 
-  const RecipeInfo({super.key, required this.recipe});
+  const RecipeInfo({
+    super.key,
+    required this.recipe,
+    required this.onRatingChange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +164,12 @@ class RecipeInfo extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute<bool>(
               builder: (BuildContext context) {
-                return RecipeScreen(recipe: recipe);
+                return RecipeScreen(
+                  recipe: recipe,
+                  onRatingChange: (value) {
+                    onRatingChange(value);
+                  },
+                );
               },
             ),
           ),
@@ -189,9 +216,26 @@ class RecipeInfo extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "Avaliação: ${recipe.avaliation}",
-                    style: TextStyle(fontSize: 18),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(5, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 1.0,
+                            ),
+                            child: Icon(
+                              Icons.star,
+                              size: 25,
+                              color: recipe.rate < index + 1
+                                  ? Colors.black
+                                  : Colors.yellow[400],
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
                   ),
                   Text(
                     "${recipe.preparationTime} min",

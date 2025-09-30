@@ -4,7 +4,7 @@ class Recipe {
   String name;
   IconData img;
   int preparationTime;
-  double avaliation;
+  int rate;
   int quantity;
   bool favorite;
   List<String> ingredients;
@@ -14,12 +14,24 @@ class Recipe {
     required this.name,
     required this.img,
     required this.preparationTime,
-    required this.avaliation,
+    required this.rate,
     required this.quantity,
     this.favorite = false,
     required this.ingredients,
     required this.instruction,
   });
+
+  copyRecipe(int updatedRate) {
+    return Recipe(
+      name: name,
+      img: img,
+      preparationTime: preparationTime,
+      rate: updatedRate,
+      quantity: quantity,
+      ingredients: ingredients,
+      instruction: instruction,
+    );
+  }
 
   // Fábrica de objetos, transforma: Map -> objeto
   factory Recipe.mapToObject(Map<String, dynamic> recipe) {
@@ -27,7 +39,7 @@ class Recipe {
       name: recipe["name"],
       img: recipe["img"],
       preparationTime: recipe["preparationTime"],
-      avaliation: recipe["avaliation"],
+      rate: recipe["rate"],
       quantity: recipe["quantity"],
       favorite: recipe["favorite"],
       ingredients: recipe["ingredients"],
@@ -40,7 +52,7 @@ class Recipe {
       "name": name,
       "img": img,
       "preparationTime": preparationTime,
-      "avaliation": avaliation,
+      "rate": rate,
       "quantity": quantity,
       "favorite": favorite,
       "ingredients": ingredients,
