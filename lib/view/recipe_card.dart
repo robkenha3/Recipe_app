@@ -13,44 +13,108 @@ class RecipeCard extends StatefulWidget {
 class _RecipeCardState extends State<RecipeCard> {
   List<Recipe> recipes = [
     Recipe(
-      name: 'Lasanha',
+      name: 'Macarrão à carbonara',
+      img: Icons.food_bank,
+      preparationTime: 15,
+      rate: 5,
+      quantity: 2,
+      favorite: true,
+      ingredients: [
+        "bacon picado a gosto",
+        "3 ovos",
+        "pimenta-do-reino a gosto",
+        "creme de leite se quiser dar um toque diferente à receita",
+        "queijo ralado a gosto",
+        "sal",
+        "macarrão de sua escolha (espaguete, fusili,etc.)",
+      ],
+      instruction: [
+        "Frite bem o bacon, até ficar crocante (pode-se adicionar salame picado).",
+        "Coloque o macarrão para cozinhar em água e sal.",
+        "No refratário onde será servido o macarrão, bata bem os ovos com um garfo.",
+        "No refratário onde será servido o macarrão, bata bem os ovos com um garfo.",
+        "Quando o macarrão estiver pronto, escorra e coloque (bem quente) sobre a mistura de ovos, misture bem.",
+        "O calor da massa cozinha os ovos.",
+        "Coloque o bacon, ainda quente, sobre o macarrão e sirva.",
+      ],
+    ),
+    Recipe(
+      name: 'Pãezinhos de Beterraba',
+      img: Icons.food_bank,
+      preparationTime: 80,
+      rate: 5,
+      quantity: 3,
+      favorite: true,
+      ingredients: [
+        "½ beterraba",
+        "4 colheres (chá) de água (20 ml)",
+        "200 g de farinha de trigo (1 e de ⅔ xícara)",
+        "1 colher (chá) de sal",
+        "¼ de xícara de água",
+        "1 colher (sopa) de manteiga sem sal",
+        "2 g (⅕ de um sachê de 10g) de fermento biológico seco",
+        "1 colher (sopa) de açúcar (16 g)",
+        "1 gema de ovo",
+        "1 clara de ovo para pincelar",
+      ],
+      instruction: [
+        "Purê de beterraba:\nAsse a beterraba embrulhada no alumínio por 20 a 30 minutos no forno a 180º C, então bata no mixer ou liquidificador com a água até ficar um purê homogêneo.",
+        "Massa do pão:\nEm uma tigela grande, adicione a farinha, o fermento, o sal, o açúcar, e misture. Adicione a gema do ovo e reserve a clara.",
+        "Em seguida, coloque a manteiga em temperatura ambiente e o purê da beterraba. Misture bem.",
+        "Transfira a massa para uma bancada e vá colocando a água aos poucos enquanto sova, para incorporar tudo. Depois da sova, a massa deve ficar lisa e elástica.",
+        "Volte para a tigela, cubra com um pano e deixe descansar até dobrar de tamanho.",
+        "Depois desse tempo, divida a massa em 6 partes iguais e modele cada uma - abra a massa com os dedos, junte as pontas no centro, vire a emenda para baixo e faça uma bolinha; Distribua as bolinhas na assadeira untada, cubra com um pano e deixe descansar por mais 30 minutos.",
+        "Por fim, pincele uma clara de ovo para dar brilho e leve ao forno preaquecido a 180°C por 20 minutos. Deixe esfriar e aproveite!",
+      ],
+    ),
+    Recipe(
+      name: 'Ponta de peito na panela de pressão',
+      img: Icons.food_bank,
+      preparationTime: 60,
+      rate: 4,
+      quantity: 3,
+      favorite: true,
+      ingredients: [
+        "1 kg de ponta de peito",
+        "3 caldos de carne ou picanha",
+        "6 cebolas grandes cortadas em rodelas",
+      ],
+      instruction: [
+        "Na panela de pressão, coloque metade das cebolas cortadas em rodelas.",
+        "Coloque a ponta de peito em cima das cebolas.",
+        "Adicione os caldos de carne, e complete com o restante das cebolas.",
+        "Tampe a panela de pressão, deixe no fogo por mais o menos 1 hora.",
+        "Depois, tire a pressão, coloque em uma travessa e sirva.",
+      ],
+    ),
+    Recipe(
+      name: 'Strogonoff de frango',
       img: Icons.food_bank,
       preparationTime: 60,
       rate: 5,
       quantity: 4,
       favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
-    ),
-    Recipe(
-      name: 'Strogonoff',
-      img: Icons.food_bank,
-      preparationTime: 40,
-      rate: 5,
-      quantity: 2,
-      favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
-    ),
-    Recipe(
-      name: 'Feijoada',
-      img: Icons.food_bank,
-      preparationTime: 120,
-      rate: 4,
-      quantity: 5,
-      favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
-    ),
-    Recipe(
-      name: 'Frango Frito',
-      img: Icons.food_bank,
-      preparationTime: 45,
-      rate: 5,
-      quantity: 1,
-      favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
+      ingredients: [
+        "3 peitos de frango cortados em cubos",
+        "sal a gosto",
+        "1 cebola picada",
+        "1 colher de manteiga",
+        "1/3 copo de mostarda",
+        "1 dente de alho picado",
+        "pimenta-do-reino a gosto",
+        "2 colheres (sopa) de maionese",
+        "1/2 copo de ketchup",
+        "1 copo de cogumelos",
+        "batata palha a gosto",
+      ],
+      instruction: [
+        "Em uma panela, misture o frango, o alho, a maionese, o sal e a pimenta.",
+        "Em uma frigideira grande, derreta a manteiga e doure a cebola.",
+        "Junte o frango temperado até que esteja dourado.",
+        "Junte o frango temperado até que esteja dourado.",
+        "Incorpore o creme de leite e retire do fogo antes de ferver.",
+        "Sirva com arroz branco e batata palha.",
+      ],
     ),
     Recipe(
       name: 'Macarrão a bolonhesa',
@@ -65,22 +129,53 @@ class _RecipeCardState extends State<RecipeCard> {
     Recipe(
       name: 'Galinhada',
       img: Icons.food_bank,
-      preparationTime: 80,
+      preparationTime: 30,
+      rate: 4,
+      quantity: 4,
+      favorite: true,
+      ingredients: [
+        "1 frango cortado em pedaços",
+        "Suco de meio limão",
+        "1 cebola média ralada",
+        "2 colheres (sopa) de extrato de tomate",
+        "1 colher (sopa) de salsa picada",
+        "2 tabletes de caldo de galinha",
+        "2 colheres (sopa) de azeite",
+        "2 xícaras (chá) de arroz lavado e escorrido",
+        "1 pimentão verde cortado em cubinhos",
+      ],
+      instruction: [
+        "Lave os pedaços de frango, tempere-os com os tabletes de caldo de galinha e o suco de limão e deixe tomar gosto.",
+        "Em uma panela grande, aqueça o azeite e doure os pedaços de frango.",
+        "Adicione a cebola e deixe refogar ligeiramente.",
+        "Junte o arroz, o extrato de tomate, o pimentão e 4 xícaras e 1/2 (chá) de água, mexendo bem.",
+        "Tampe a panela e, assim que iniar fervura, baixe o fogo e cozinhe por cerca de 15 minutos, até que o arroz fique cremoso e úmido. Se necessário, pingue mais água.",
+        "Retire do fogo e passe para uma travessa. Polvilhe a salsa e sirva a seguir.",
+      ],
+    ),
+    Recipe(
+      name: 'Filé de merluza com batata ao forno',
+      img: Icons.food_bank,
+      preparationTime: 30,
       rate: 5,
       quantity: 4,
       favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
-    ),
-    Recipe(
-      name: 'Bife Acebolado',
-      img: Icons.food_bank,
-      preparationTime: 40,
-      rate: 4,
-      quantity: 2,
-      favorite: true,
-      ingredients: ["massa", "presunto", "queijo"],
-      instruction: ["cozinhar massa", "temperar carne"],
+      ingredients: [
+        "8 filés de merluza",
+        "1 pimentão (cortado em rodelas)",
+        "1 cebola (cortada em rodelas)",
+        "Orégano",
+        "4 batatas cruas (em rodelas, sem casca)",
+        "2 tomates (cortados em rodelas - as sementes ficam à preferência)",
+        "1/2 lata de molho de tomate de boa qualidade",
+        "Azeite para untar",
+      ],
+      instruction: [
+        "Tempere os filés à seu gosto e reserve por 10 minutos.",
+        "Unta um refratário com azeite e faça uma camada de batata, em seguida arrume os filés sobre a batata.",
+        "Acrescente a cebola, o tomate, o pimentão, orégano a gosto, regue com o molho de tomate (1/2 lata).",
+        "Cubra com o restante das batatas. Cubra com papel alumínio e leve ao forno alto até que as batatas fiquem macias.",
+      ],
     ),
   ];
 
@@ -112,17 +207,23 @@ class _RecipeCardState extends State<RecipeCard> {
         // constraints tem o tamanho da tela (maxWidth, maxHeight, minWidth, minHeight)
 
         // pc
-        if (constraints.maxWidth >= 900) {
+        if (constraints.maxWidth >= 1070) {
           return GridView.count(
             crossAxisCount: 3,
-            childAspectRatio: 0.8,
+            childAspectRatio: 0.76,
             children: conversorRecipesToRecipeCard(),
           );
           // tablet
+        } else if (constraints.maxWidth >= 900) {
+          return GridView.count(
+            crossAxisCount: 3,
+            childAspectRatio: 0.70,
+            children: conversorRecipesToRecipeCard(),
+          );
         } else if (constraints.maxWidth >= 600) {
           return GridView.count(
             crossAxisCount: 2,
-            childAspectRatio: 0.8,
+            childAspectRatio: 0.75,
             children: conversorRecipesToRecipeCard(),
           );
           // Celular
@@ -193,26 +294,24 @@ class RecipeInfo extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
 
               Row(
                 children: [
                   Expanded(
                     child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Text(
-                          recipe.name,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        recipe.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
-
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -221,17 +320,12 @@ class RecipeInfo extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(5, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 1.0,
-                            ),
-                            child: Icon(
-                              Icons.star,
-                              size: 25,
-                              color: recipe.rate < index + 1
-                                  ? Colors.black
-                                  : Colors.yellow[400],
-                            ),
+                          return Icon(
+                            Icons.star,
+                            size: 25,
+                            color: recipe.rate < index + 1
+                                ? Colors.black
+                                : Colors.yellow[400],
                           );
                         }),
                       ),
@@ -241,9 +335,9 @@ class RecipeInfo extends StatelessWidget {
                     "${recipe.preparationTime} min",
                     style: TextStyle(fontSize: 18),
                   ),
-                  // SizedBox()
                 ],
               ),
+              SizedBox(height: 10),
             ],
           ),
         ),

@@ -20,29 +20,31 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
         appBar: AppBar(
           // leading: Icon(Icons.arrow_back_ios),
           backgroundColor: Color.fromARGB(70, 218, 218, 218),
-          title: FractionallySizedBox(
-            widthFactor: 0.85,
-            child: TextField(
-              controller: textController,
-              onChanged: (value) => {setState(() {})},
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 0,
+          title: Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.85,
+              child: TextField(
+                controller: textController,
+                onChanged: (value) => {setState(() {})},
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 0,
+                    ),
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 0,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 0,
+                    ),
                   ),
+                  filled: true,
+                  fillColor: Color.fromRGBO(255, 254, 254, 1),
+                  prefixIcon: Icon(Icons.search, color: Colors.black),
                 ),
-                filled: true,
-                fillColor: Color.fromRGBO(255, 254, 254, 1),
-                prefixIcon: Icon(Icons.search, color: Colors.black),
               ),
             ),
           ),
@@ -59,14 +61,7 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
           ),
         ),
         body: TabBarView(
-          children: [
-            Home(),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-          ],
+          children: [Home(), Home(), Home(), Home(), Home(), Home()],
         ), // actions: [SizedBox(width: 200)],
       ),
     );
