@@ -123,6 +123,24 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 widget.onRatingChange(index + 1);
                                 widget.recipe.rate = index + 1;
                                 setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Text(
+                                        "Sua avaliação foi enviada com sucesso!",
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Ok"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               child: Icon(
                                 Icons.star,

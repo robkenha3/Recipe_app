@@ -50,7 +50,7 @@ class Recipe {
   Map<String, dynamic> objectToMap() {
     return {
       "name": name,
-      "img": img,
+      // "img": img.toString(),
       "preparationTime": preparationTime,
       "rate": rate,
       "quantity": quantity,

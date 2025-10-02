@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'button_test.dart';
 import 'home.dart';
 
 class SearchRecipeBar extends StatefulWidget {
@@ -61,7 +62,7 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
           ),
         ),
         body: TabBarView(
-          children: [Home(), Home(), Home(), Home(), Home(), Home()],
+          children: [Home(), MyWidget(), Home(), Home(), Home(), Home()],
         ), // actions: [SizedBox(width: 200)],
       ),
     );
