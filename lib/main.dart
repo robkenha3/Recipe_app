@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:projeto_receitas/bloc/manager_bloc.dart';
+
+import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
+import 'package:projeto_receitas/logic/recipe_list_widget.dart';
 import 'view/search_recipe_bar.dart';
 
 void main() {
@@ -12,7 +13,9 @@ class RecipeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: ((context) => ManagerBloc()),
-    child: MaterialApp(home: SearchRecipeBar()));
+    return RecipeListWidget(
+      recipeListNotifier: RecipeListNotifier(),
+      child: MaterialApp(home: SearchRecipeBar()),
+    );
   }
 }

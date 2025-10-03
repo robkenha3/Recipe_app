@@ -28,6 +28,7 @@ class Recipe {
       preparationTime: preparationTime,
       rate: updatedRate,
       quantity: quantity,
+      favorite: favorite,
       ingredients: ingredients,
       instruction: instruction,
     );

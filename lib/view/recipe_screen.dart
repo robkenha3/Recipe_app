@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../logic/recipe_list_notifier.dart';
+import '../logic/recipe_list_widget.dart';
 import '../model/recipe.dart';
 
-class RecipeScreen extends StatefulWidget {
-  final Recipe recipe;
-  final Function onRatingChange;
 
-  const RecipeScreen({
-    super.key,
-    required this.recipe,
-    required this.onRatingChange,
-  });
+class RecipeScreen extends StatelessWidget {
+  final int index;
 
-  @override
-  State<RecipeScreen> createState() => _RecipeScreenState();
-}
+  const RecipeScreen({super.key, required this.index});
 
-class _RecipeScreenState extends State<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
+    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
+    Recipe recipe = recipeListNotifier.recipes[index];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[300],
@@ -54,7 +50,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(color: Colors.grey[300]),
-                      child: Icon(widget.recipe.img, size: 350),
+
+                      child: Icon(recipe.img, size: 350),
                     ),
                   ),
                 ],
@@ -68,7 +65,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          widget.recipe.name,
+
+                          recipe.name,
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -93,7 +91,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       Row(
                         children: [
                           Icon(Icons.timer_sharp),
-                          Text(": ${widget.recipe.preparationTime} min"),
+                          Text(": ${recipe.preparationTime} min"),
                         ],
                       ),
                     ],
@@ -103,57 +101,46 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       Row(
                         children: [
                           Icon(Icons.person),
-                          Text(": ${widget.recipe.quantity}"),
+                          Text(": ${recipe.quantity}"),
                         ],
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(5, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 1.0,
-                            ),
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: () {
-                                widget.onRatingChange(index + 1);
-                                widget.recipe.rate = index + 1;
-                                setState(() {});
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: Text(
-                                        "Sua avaliação foi enviada com sucesso!",
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Ok"),
-                                        ),
-                                      ],
+                  ListenableBuilder(
+                    listenable: recipeListNotifier,
+                    builder: (context, _) {
+                      Recipe recipe = recipeListNotifier.recipes[index];
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(5, (indexStar) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 1.0,
+                                ),
+                                child: InkWell(
+                                  customBorder: const CircleBorder(),
+                                  onTap: () {
+                                    recipeListNotifier.updateRecipe(
+                                      index,
+                                      indexStar,
                                     );
                                   },
-                                );
-                              },
-                              child: Icon(
-                                Icons.star,
-                                size: 25,
-                                color: widget.recipe.rate < index + 1
-                                    ? Colors.black
-                                    : Colors.yellow[400],
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
+                                  child: Icon(
+                                    Icons.star,
+                                    size: 25,
+                                    color: recipe.rate < indexStar
+                                        ? Colors.black
+                                        : Colors.yellow[400],
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -168,9 +155,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: widget.recipe.ingredients.length,
+                itemCount: recipe.ingredients.length,
                 itemBuilder: (BuildContext context, int indexIng) {
-                  final String ingredient = widget.recipe.ingredients[indexIng];
+                  final String ingredient = recipe.ingredients[indexIng];
                   return ListTile(
                     leading: Icon(
                       Icons.circle,
@@ -191,10 +178,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: widget.recipe.instruction.length,
+                itemCount: recipe.instruction.length,
                 itemBuilder: (BuildContext context, int indexIns) {
-                  final String instruction =
-                      widget.recipe.instruction[indexIns];
+                  final String instruction = recipe.instruction[indexIns];
                   final int itemNumber = indexIns + 1;
 
                   return ListTile(
