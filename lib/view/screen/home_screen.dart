@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../components/recipe_card.dart';
+import 'package:projeto_receitas/view/components/home_screen_content.dart';
+import 'add_recipe_screen.dart';
+import 'favorite_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,66 +11,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController textController = TextEditingController();
+  int _selectedIndex = 0;
 
+  final List<Widget> _pages = [
+    HomeScreenContent(),
+    FavoriteScreen(),
+    AddRecipeScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
-    //PageView -> ver sobre isso para trocar o tabBar
-    return DefaultTabController(
-      length: 6,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(70, 218, 218, 218),
-          title: Center(
-            child: FractionallySizedBox(
-              widthFactor: 0.85,
-              child: TextField(
-                controller: textController,
-                onChanged: (value) => {setState(() {})},
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 0,
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Color.fromRGBO(255, 254, 254, 1),
-                  prefixIcon: Icon(Icons.search, color: Colors.black),
-                ),
-              ),
-            ),
-          ),
+    void onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
 
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.home)),
-              Tab(text: "Café da manhã"),
-              Tab(text: "Almoço"),
-              Tab(text: "Jantar"),
-              Tab(text: "Sobremesa"),
-              Tab(text: "Fit"),
-            ],
+    return Scaffold(
+      body: IndexedStack(index: _selectedIndex, children: _pages),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: onItemTapped,
+
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: "Favorito",
           ),
-        ),
-        body: TabBarView(
-          children: [
-            RecipeCard(),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-          ],
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle, size: 30.0),
+            label: "",
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.checklist), label: "Lista"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
+        ],
+
+        selectedItemColor: Color.fromRGBO(240, 69, 57, 1),
+        unselectedItemColor: const Color.fromARGB(255, 112, 112, 112),
       ),
     );
   }

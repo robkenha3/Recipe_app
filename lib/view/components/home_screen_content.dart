@@ -1,42 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/view/screen/favorite_screen.dart';
 
-import '../screen/home.dart';
+import 'recipe_card.dart';
 
-class SearchRecipeBar extends StatefulWidget {
-  const SearchRecipeBar({super.key});
+class HomeScreenContent extends StatefulWidget {
+  const HomeScreenContent({super.key});
 
   @override
-  State<SearchRecipeBar> createState() => _SearchRecipeBarState();
+  State<HomeScreenContent> createState() => _HomeScreenContentState();
 }
 
-class _SearchRecipeBarState extends State<SearchRecipeBar> {
+class _HomeScreenContentState extends State<HomeScreenContent> {
   TextEditingController textController = TextEditingController();
-
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = [Home(), FavoriteScreen()];
 
   @override
   Widget build(BuildContext context) {
-    void onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-      Navigator.of(context).push(
-        MaterialPageRoute<bool>(
-          builder: (BuildContext context) {
-            return _pages[_selectedIndex];
-          },
-        ),
-      );
-    }
-
+    //PageView -> ver sobre isso para trocar o tabBar
     return DefaultTabController(
       length: 6,
       child: Scaffold(
         appBar: AppBar(
-          // leading: Icon(Icons.arrow_back_ios),
           backgroundColor: Color.fromARGB(70, 218, 218, 218),
           title: Center(
             child: FractionallySizedBox(
@@ -80,37 +62,13 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
         ),
         body: TabBarView(
           children: [
-            Home(),
+            RecipeCard(),
             Container(color: Colors.green),
             Container(color: Colors.red),
             Container(color: Colors.green),
             Container(color: Colors.red),
             Container(color: Colors.green),
           ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (int index) {
-            onItemTapped(index);
-          },
-
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: "Favorito",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle, size: 30.0),
-              label: "",
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.checklist), label: "Meu"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
-          ],
-
-          selectedItemColor: Colors.blue[800],
-          unselectedItemColor: Colors.grey,
         ),
       ),
     );

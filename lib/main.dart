@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
 import 'package:projeto_receitas/logic/recipe_list_widget.dart';
-import 'view/screen/home.dart';
+import 'view/screen/home_screen.dart';
 
 void main() {
   runApp(RecipeApp());
@@ -14,7 +14,7 @@ class RecipeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RecipeListWidget(
       recipeListNotifier: RecipeListNotifier(),
-      child: MaterialApp(home: Home()),
+      child: MaterialApp(home: HomeScreen()),
     );
   }
 }
