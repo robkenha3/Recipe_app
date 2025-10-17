@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_receitas/view/screen/favorite_screen.dart';
 
-import 'home.dart';
+import '../screen/home.dart';
 
 class SearchRecipeBar extends StatefulWidget {
   const SearchRecipeBar({super.key});
@@ -12,8 +13,25 @@ class SearchRecipeBar extends StatefulWidget {
 class _SearchRecipeBarState extends State<SearchRecipeBar> {
   TextEditingController textController = TextEditingController();
 
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [Home(), FavoriteScreen()];
+
   @override
   Widget build(BuildContext context) {
+    void onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+      Navigator.of(context).push(
+        MaterialPageRoute<bool>(
+          builder: (BuildContext context) {
+            return _pages[_selectedIndex];
+          },
+        ),
+      );
+    }
+
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -69,7 +87,31 @@ class _SearchRecipeBarState extends State<SearchRecipeBar> {
             Container(color: Colors.red),
             Container(color: Colors.green),
           ],
-        ), // actions: [SizedBox(width: 200)],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (int index) {
+            onItemTapped(index);
+          },
+
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "Favorito",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle, size: 30.0),
+              label: "",
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.checklist), label: "Meu"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
+          ],
+
+          selectedItemColor: Colors.blue[800],
+          unselectedItemColor: Colors.grey,
+        ),
       ),
     );
   }

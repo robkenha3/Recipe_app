@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
-import 'package:projeto_receitas/view/recipe_screen.dart';
+import 'package:projeto_receitas/view/screen/recipe_screen.dart';
 
-import '../logic/recipe_list_widget.dart';
-import '../model/recipe.dart';
+import '../../logic/recipe_list_widget.dart';
+import '../../model/recipe.dart';
 
 class RecipeCard extends StatefulWidget {
   const RecipeCard({super.key});

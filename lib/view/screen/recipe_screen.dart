@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../logic/recipe_list_notifier.dart';
-import '../logic/recipe_list_widget.dart';
-import '../model/recipe.dart';
+import '../../logic/recipe_list_notifier.dart';
+import '../../logic/recipe_list_widget.dart';
+import '../../model/recipe.dart';
 
 class RecipeScreen extends StatelessWidget {
   final int index;
