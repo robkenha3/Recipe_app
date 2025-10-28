@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_receitas/model/my_recipe.dart';
+import 'package:projeto_receitas/notifier/my_recipe_list_notifier.dart';
+import 'package:provider/provider.dart';
 
-import '../../logic/recipe_list_notifier.dart';
-import '../../logic/recipe_list_widget.dart';
+import '../../notifier/recipe_list_notifier.dart';
+// import '../../notifier/recipe_list_widget.dart';
 import '../../model/recipe.dart';
 
 class RecipeScreen extends StatelessWidget {
   final int index;
+  final String cardStyle;
 
-  const RecipeScreen({super.key, required this.index});
+  const RecipeScreen({super.key, required this.index, required this.cardStyle});
 
   @override
   Widget build(BuildContext context) {
-    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
-    Recipe recipe = recipeListNotifier.recipes[index];
+    final recipeListNotifier = context.watch<RecipeListNotifier>();
+    List<Recipe> generalRecipes = recipeListNotifier.recipes;
+
+    final myRecipeListNotifier = context.watch<MyRecipeListNotifier>();
+    List<MyRecipe> userRecipes = myRecipeListNotifier.myRecipes;
+
+    final bool isGeneralRecipe = cardStyle == "recipeCard";
+    final List listToUse = isGeneralRecipe ? generalRecipes : userRecipes;
+
+    final dynamic recipeToDisplay = listToUse[index];
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +61,7 @@ class RecipeScreen extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(color: Colors.grey[300]),
-                      child: Icon(recipe.img, size: 350),
+                      child: Icon(Icons.image, size: 350),
                     ),
                   ),
                 ],
@@ -63,7 +75,7 @@ class RecipeScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          recipe.name,
+                          recipeToDisplay.name,
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -88,7 +100,7 @@ class RecipeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.timer_sharp),
-                          Text(": ${recipe.preparationTime} min"),
+                          Text(": ${recipeToDisplay.preparationTime} min"),
                         ],
                       ),
                     ],
@@ -98,47 +110,46 @@ class RecipeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.person),
-                          Text(": ${recipe.quantity}"),
+                          Text(": ${recipeToDisplay.quantity}"),
                         ],
                       ),
                     ],
                   ),
-                  ListenableBuilder(
-                    listenable: recipeListNotifier,
-                    builder: (context, _) {
-                      Recipe recipe = recipeListNotifier.recipes[index];
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(5, (indexStar) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 1.0,
+                  if (isGeneralRecipe)
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(5, (indexStar) {
+                            final currentRate =
+                                (recipeListNotifier.recipes.length > index)
+                                ? recipeListNotifier.recipes[index].rate
+                                : 0;
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 1.0,
+                              ),
+                              child: InkWell(
+                                customBorder: const CircleBorder(),
+                                onTap: () {
+                                  recipeListNotifier.updateRating(
+                                    index,
+                                    indexStar,
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.star,
+                                  size: 25,
+                                  color: currentRate < indexStar
+                                      ? Colors.black
+                                      : Colors.yellow[400],
                                 ),
-                                child: InkWell(
-                                  customBorder: const CircleBorder(),
-                                  onTap: () {
-                                    recipeListNotifier.updateRecipe(
-                                      index,
-                                      indexStar,
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.star,
-                                    size: 25,
-                                    color: recipe.rate < indexStar
-                                        ? Colors.black
-                                        : Colors.yellow[400],
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                 ],
               ),
               SizedBox(height: 20),
@@ -152,16 +163,15 @@ class RecipeScreen extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: recipe.ingredients.length,
+                itemCount: recipeToDisplay.ingredients.length,
                 itemBuilder: (BuildContext context, int indexIng) {
-                  final String ingredient = recipe.ingredients[indexIng];
                   return ListTile(
                     leading: Icon(
                       Icons.circle,
                       size: 10,
                       color: Colors.green[200],
                     ),
-                    title: Text(ingredient),
+                    title: Text(recipeToDisplay.ingredients[indexIng]),
                   );
                 },
               ),
@@ -175,9 +185,8 @@ class RecipeScreen extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: recipe.instruction.length,
+                itemCount: recipeToDisplay.instruction.length,
                 itemBuilder: (BuildContext context, int indexIns) {
-                  final String instruction = recipe.instruction[indexIns];
                   final int itemNumber = indexIns + 1;
 
                   return ListTile(
@@ -185,7 +194,7 @@ class RecipeScreen extends StatelessWidget {
                       "$itemNumber.",
                       style: TextStyle(fontSize: 15),
                     ),
-                    title: Text(instruction),
+                    title: Text(recipeToDisplay.instruction[indexIns]),
                   );
                 },
               ),

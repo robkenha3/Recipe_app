@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
-import 'package:projeto_receitas/logic/recipe_list_widget.dart';
+import 'package:projeto_receitas/notifier/my_recipe_list_notifier.dart';
+import 'package:projeto_receitas/notifier/recipe_list_notifier.dart';
+// import 'package:projeto_receitas/notifier/recipe_list_widget.dart';
 import 'package:projeto_receitas/model/recipe.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/my_recipe.dart';
 import '../screen/recipe_screen.dart';
 
-class RecipeFavoriteCard extends StatelessWidget {
-  final int index;
+class RecipeFavoriteMyListCard extends StatelessWidget {
+  final int indexFavorite;
+  final int indexMyList;
+  final IconData icon;
+  final String cardType;
+  final String cardStyle;
 
-  const RecipeFavoriteCard({super.key, required this.index});
+  const RecipeFavoriteMyListCard({
+    super.key,
+    this.indexFavorite = 0,
+    this.indexMyList = 0,
+    required this.icon,
+    required this.cardType,
+    required this.cardStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
-    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
-    Recipe recipe = recipeListNotifier.recipes[index];
+    final recipeListNotifier = context.watch<RecipeListNotifier>();
+    Recipe recipe = recipeListNotifier.recipes[indexFavorite];
+
+    final myRecipeListNotifier = context.watch<MyRecipeListNotifier>();
+    MyRecipe myRecipe = myRecipeListNotifier.myRecipes[indexMyList];
 
     return Padding(
       padding: EdgeInsets.all(12.0),
@@ -22,7 +39,12 @@ class RecipeFavoriteCard extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute<bool>(
               builder: (BuildContext context) {
-                return RecipeScreen(index: index);
+                return RecipeScreen(
+                  index: cardType == "favorite" ? indexFavorite : indexMyList,
+                  cardStyle: cardStyle == "recipeCard"
+                      ? cardStyle
+                      : "myRecipeCard",
+                );
               },
             ),
           ),
@@ -42,10 +64,15 @@ class RecipeFavoriteCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 15, top: 10),
-                      child: Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                        size: 30,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          icon,
+                          color: icon == Icons.favorite_border
+                              ? Colors.red
+                              : Colors.black,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ],
@@ -57,7 +84,7 @@ class RecipeFavoriteCard extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
-                    recipe.name,
+                    cardType == "favorite" ? recipe.name : myRecipe.name,
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,

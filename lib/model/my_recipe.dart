@@ -1,52 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Recipe {
+class MyRecipe {
   String id;
   String name;
   String img;
-  int preparationTime;
-  int rate;
+  double preparationTime;
   int quantity;
-  bool favorite;
   List<String> ingredients;
   List<String> instruction;
 
-  Recipe({
+  MyRecipe({
     this.id = '',
     required this.name,
     required this.img,
     required this.preparationTime,
-    required this.rate,
     required this.quantity,
-    this.favorite = false,
     required this.ingredients,
     required this.instruction,
   });
 
   copyRecipe(int updatedRate) {
-    return Recipe(
+    return MyRecipe(
       name: name,
       img: img,
       preparationTime: preparationTime,
-      rate: updatedRate,
       quantity: quantity,
-      favorite: favorite,
       ingredients: ingredients,
       instruction: instruction,
     );
   }
 
   // Fábrica de objetos, transforma: Map -> objeto
-  factory Recipe.toObject(DocumentSnapshot doc) {
+  factory MyRecipe.toObject(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    return Recipe(
+    return MyRecipe(
       id: doc.id,
       name: data["name"],
       img: data["img"],
       preparationTime: data["preparationTime"],
-      rate: data["rate"],
       quantity: data["quantity"],
-      favorite: data["favorite"],
       ingredients: List<String>.from(data["ingredients"]),
       instruction: List<String>.from(data["instruction"]),
     );
@@ -57,9 +49,7 @@ class Recipe {
       "name": name,
       "img": img,
       "preparationTime": preparationTime,
-      "rate": rate,
       "quantity": quantity,
-      "favorite": favorite,
       "ingredients": ingredients,
       "instruction": instruction,
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_receitas/view/components/home_screen_content.dart';
+import 'package:projeto_receitas/view/screen/my_recipe_screen.dart';
 import 'add_recipe_screen.dart';
 import 'favorite_screen.dart';
 
@@ -16,8 +17,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     HomeScreenContent(),
     FavoriteScreen(),
-    AddRecipeScreen(),
+    AddRecipeScreen(title: "Adicionar Receita"),
+    MyRecipeScreen(),
+    MyRecipeScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     void onItemTapped(int index) {

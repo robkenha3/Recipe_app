@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
-import 'package:projeto_receitas/logic/recipe_list_widget.dart';
-import 'package:projeto_receitas/view/components/recipe_favorite_card.dart';
+import 'package:projeto_receitas/notifier/recipe_list_notifier.dart';
+// import 'package:projeto_receitas/notifier/recipe_list_widget.dart';
+import 'package:projeto_receitas/view/components/recipe_favorite_mylist_card.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/recipe.dart';
 
@@ -15,11 +16,12 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
-    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
+    final recipeListNotifier = context.watch<RecipeListNotifier>();
     List<Recipe> recipes = recipeListNotifier.recipes;
-    recipeListNotifier.addListener(() {
-      setState(() {});
-    });
+
+    // recipeListNotifier.addListener(() {
+    //   setState(() {});
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +36,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         itemCount: recipes.length,
         itemBuilder: (BuildContext context, int position) {
           int newPosition = position % recipes.length;
-          return RecipeFavoriteCard(index: newPosition);
+          return RecipeFavoriteMyListCard(
+            indexFavorite: newPosition,
+            icon: Icons.favorite_border,
+            cardType: 'favorite', cardStyle: 'recipeCard',
+          );
         },
       ),
     );

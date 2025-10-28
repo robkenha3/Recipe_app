@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/logic/recipe_list_notifier.dart';
+import 'package:projeto_receitas/notifier/recipe_list_notifier.dart';
 import 'package:projeto_receitas/view/screen/recipe_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../../logic/recipe_list_widget.dart';
+// import '../../notifier/recipe_list_widget.dart';
 import '../../model/recipe.dart';
 
 class RecipeCard extends StatefulWidget {
@@ -15,11 +16,11 @@ class RecipeCard extends StatefulWidget {
 class _RecipeCardState extends State<RecipeCard> {
   @override
   Widget build(BuildContext context) {
-    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
+    final recipeListNotifier = context.watch<RecipeListNotifier>();
     List<Recipe> recipes = recipeListNotifier.recipes;
-    recipeListNotifier.addListener(() {
-      setState(() {});
-    });
+    // recipeListNotifier.addListener(() {
+    //   setState(() {});
+    // });
 
     List<RecipeInfo> conversorRecipesToRecipeCard() {
       List<RecipeInfo> newRecipes = recipes.asMap().entries.map((entry) {
@@ -76,7 +77,7 @@ class RecipeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RecipeListNotifier recipeListNotifier = RecipeListWidget.of(context);
+    final recipeListNotifier = context.watch<RecipeListNotifier>();
     Recipe recipe = recipeListNotifier.recipes[index];
 
     return Padding(
@@ -86,7 +87,7 @@ class RecipeInfo extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute<bool>(
               builder: (BuildContext context) {
-                return RecipeScreen(index: index);
+                return RecipeScreen(index: index, cardStyle: "recipeCard",);
               },
             ),
           ),
@@ -104,7 +105,7 @@ class RecipeInfo extends StatelessWidget {
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(1.0),
                         ),
-                        child: Icon(recipe.img),
+                        child: Icon(Icons.image),
                       ),
                     ),
                   ),
