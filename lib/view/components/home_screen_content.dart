@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../notifier/recipe_list_notifier.dart';
+import 'category_filter_bar.dart';
 import 'recipe_card.dart';
 
 class HomeScreenContent extends StatefulWidget {
@@ -13,63 +16,54 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   TextEditingController textController = TextEditingController();
 
   @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //PageView -> ver sobre isso para trocar o tabBar
-    return DefaultTabController(
-      length: 6,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(70, 218, 218, 218),
-          title: Center(
-            child: FractionallySizedBox(
-              widthFactor: 0.85,
-              child: TextField(
-                controller: textController,
-                onChanged: (value) => {setState(() {})},
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 0,
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Color.fromRGBO(255, 254, 254, 1),
-                  prefixIcon: Icon(Icons.search, color: Colors.black),
-                ),
-              ),
+    final recipeNotifier = context.watch<RecipeListNotifier>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: TextField(
+          controller: textController,
+          onChanged: (value) {
+            recipeNotifier.filterRecipes(value);
+          },
+          decoration: InputDecoration(
+            hintText: "Buscar receita...",
+            filled: true,
+            fillColor: Colors.white,
+            prefixIcon: Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: CategoryFilterBar(
+              selected: recipeNotifier.selectedCategory,
+              onSelected: (cat) => recipeNotifier.filterByCategory(cat),
             ),
           ),
 
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.home)),
-              Tab(text: "Café da manhã"),
-              Tab(text: "Almoço"),
-              Tab(text: "Jantar"),
-              Tab(text: "Sobremesa"),
-              Tab(text: "Fit"),
-            ],
+          SizedBox(height: 15),
+
+          Expanded(
+            child: RecipeGridList(),
           ),
-        ),
-        body: TabBarView(
-          children: [
-            RecipeCard(),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.green),
-          ],
-        ),
+        ],
       ),
     );
   }

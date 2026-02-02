@@ -8,6 +8,7 @@ class MyRecipe {
   int quantity;
   List<String> ingredients;
   List<String> instruction;
+  String? category;
 
   MyRecipe({
     this.id = '',
@@ -17,20 +18,22 @@ class MyRecipe {
     required this.quantity,
     required this.ingredients,
     required this.instruction,
+    this.category,
   });
 
-  copyRecipe(int updatedRate) {
+  copyMyRecipe(String recipeId) {
     return MyRecipe(
+      id: recipeId,
       name: name,
       img: img,
       preparationTime: preparationTime,
       quantity: quantity,
       ingredients: ingredients,
       instruction: instruction,
+      category: category,
     );
   }
 
-  // Fábrica de objetos, transforma: Map -> objeto
   factory MyRecipe.toObject(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return MyRecipe(
@@ -41,9 +44,10 @@ class MyRecipe {
       quantity: data["quantity"],
       ingredients: List<String>.from(data["ingredients"]),
       instruction: List<String>.from(data["instruction"]),
+      category: data["category"],
     );
   }
-  // transforma: Objeto -> Map
+
   Map<String, dynamic> toMap() {
     return {
       "name": name,
@@ -52,6 +56,7 @@ class MyRecipe {
       "quantity": quantity,
       "ingredients": ingredients,
       "instruction": instruction,
+      "category": category,
     };
   }
 }

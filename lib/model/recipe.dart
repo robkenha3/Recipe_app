@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'recipe_category.dart';
+
 class Recipe {
   String id;
   String name;
@@ -7,9 +9,9 @@ class Recipe {
   int preparationTime;
   int rate;
   int quantity;
-  bool favorite;
   List<String> ingredients;
   List<String> instruction;
+  RecipeCategory category;
 
   Recipe({
     this.id = '',
@@ -18,9 +20,9 @@ class Recipe {
     required this.preparationTime,
     required this.rate,
     required this.quantity,
-    this.favorite = false,
     required this.ingredients,
     required this.instruction,
+    this.category = RecipeCategory.all,
   });
 
   copyRecipe(int updatedRate) {
@@ -30,9 +32,9 @@ class Recipe {
       preparationTime: preparationTime,
       rate: updatedRate,
       quantity: quantity,
-      favorite: favorite,
       ingredients: ingredients,
       instruction: instruction,
+      category: category,
     );
   }
 
@@ -46,9 +48,9 @@ class Recipe {
       preparationTime: data["preparationTime"],
       rate: data["rate"],
       quantity: data["quantity"],
-      favorite: data["favorite"],
       ingredients: List<String>.from(data["ingredients"]),
       instruction: List<String>.from(data["instruction"]),
+      category: parseCategory(data["category"]),
     );
   }
   // transforma: Objeto -> Map
@@ -59,9 +61,23 @@ class Recipe {
       "preparationTime": preparationTime,
       "rate": rate,
       "quantity": quantity,
-      "favorite": favorite,
       "ingredients": ingredients,
       "instruction": instruction,
+      "category": category.name,
     };
+  }
+
+  static RecipeCategory parseCategory(dynamic value) {
+    if (value == null) return RecipeCategory.all;
+
+    if (value is String) {
+      try {
+        return RecipeCategory.values.firstWhere((e) => e.name == value);
+      } catch (_) {
+        return RecipeCategory.all;
+      }
+    }
+
+    return RecipeCategory.all;
   }
 }

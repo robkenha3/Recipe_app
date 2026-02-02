@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/notifier/recipe_list_notifier.dart';
-// import 'package:projeto_receitas/notifier/recipe_list_widget.dart';
-import 'package:projeto_receitas/view/components/recipe_favorite_mylist_card.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/recipe.dart';
+import '../../notifier/favorite_list_notifier.dart';
+import '../components/recipe_favorite_myrecipe_card.dart';
 
-class FavoriteScreen extends StatefulWidget {
+class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
-}
-
-class _FavoriteScreenState extends State<FavoriteScreen> {
-  @override
   Widget build(BuildContext context) {
-    final recipeListNotifier = context.watch<RecipeListNotifier>();
-    List<Recipe> recipes = recipeListNotifier.recipes;
+    final favoriteNotifier = context.watch<FavoriteListNotifier>();
+    final List<Recipe> favoriteRecipes = favoriteNotifier.favoriteRecipes;
 
-    // recipeListNotifier.addListener(() {
-    //   setState(() {});
-    // });
+    if (favoriteRecipes.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Center(child: const Text("Receitas Favoritas"))),
+        body: const Center(
+          child: Text(
+            "Nenhuma receita favoritada ainda!",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Receitas Favoritas",
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -33,13 +34,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         ),
       ),
       body: ListView.builder(
-        itemCount: recipes.length,
-        itemBuilder: (BuildContext context, int position) {
-          int newPosition = position % recipes.length;
+        itemCount: favoriteRecipes.length,
+        itemBuilder: (context, index) {
           return RecipeFavoriteMyListCard(
-            indexFavorite: newPosition,
-            icon: Icons.favorite_border,
-            cardType: 'favorite', cardStyle: 'recipeCard',
+            recipe: favoriteRecipes[index],
+            icon: Icons.favorite,
+            cardType: 'favorite',
+            cardStyle: 'recipeCard',
           );
         },
       ),

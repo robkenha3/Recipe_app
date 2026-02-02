@@ -1,51 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_receitas/model/my_recipe.dart';
-import 'package:projeto_receitas/notifier/my_recipe_list_notifier.dart';
-// import 'package:projeto_receitas/notifier/recipe_list_notifier.dart';
-import 'package:projeto_receitas/view/components/recipe_favorite_mylist_card.dart';
 import 'package:provider/provider.dart';
+import '../../model/my_recipe.dart';
+import '../../notifier/my_recipe_list_notifier.dart';
+import '../components/recipe_favorite_myrecipe_card.dart';
 
-// import '../../model/recipe.dart';
-
-class MyRecipeScreen extends StatefulWidget {
+class MyRecipeScreen extends StatelessWidget {
   const MyRecipeScreen({super.key});
 
   @override
-  State<MyRecipeScreen> createState() => _MyRecipeScreenState();
-}
-
-class _MyRecipeScreenState extends State<MyRecipeScreen> {
-  @override
   Widget build(BuildContext context) {
-    final myRecipeListNotifier = context.watch<MyRecipeListNotifier>();
-    List<MyRecipe> myRecipes = myRecipeListNotifier.myRecipes;
-
-    // recipeListNotifier.addListener(() {
-    //   setState(() {});
-    // });
+    final myRecNotifier = context.watch<MyRecipeListNotifier>();
+    final List<MyRecipe> myRecipes = myRecNotifier.myRecipes;
 
     return Scaffold(
       appBar: AppBar(
-        leading: Text(""),
-        title: Center(
-          child: Text(
-            "Minhas Receitas",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
+        title: const Center(child: Text("Minhas Receitas")),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.add_circle, color: Colors.red, size: 35),
+            icon: const Icon(Icons.add_circle, color: Colors.red, size: 35),
           ),
         ],
       ),
       body: ListView.builder(
         itemCount: myRecipes.length,
-        itemBuilder: (BuildContext context, int position) {
-          int newPosition = position % myRecipes.length;
+        itemBuilder: (context, index) {
           return RecipeFavoriteMyListCard(
-            indexMyList: newPosition,
+            recipe: myRecipes[index],
             icon: Icons.delete,
             cardType: "myRecipes",
             cardStyle: 'myRecipeCard',

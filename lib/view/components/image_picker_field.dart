@@ -52,7 +52,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
             : ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.file(
-                  _imageFile!, // Exibe a imagem selecionada
+                  _imageFile!,
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,

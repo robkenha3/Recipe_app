@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:projeto_receitas/view/components/image_picker_field.dart';
 import 'package:projeto_receitas/view/screen/confirm_screen.dart';
 
-import '../../data/api/my_recipe_api.dart';
 import '../../model/my_recipe.dart';
+import '../../notifier/my_recipe_list_notifier.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   final String title;
@@ -94,7 +95,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         instruction: _instructions,
       );
 
-      createMyRecipe(newMyRecipe);
+      context.read<MyRecipeListNotifier>().addMyRecipeNotifier(newMyRecipe);
       return true;
     } else {
       return false;

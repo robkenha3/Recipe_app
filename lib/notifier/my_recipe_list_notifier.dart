@@ -12,10 +12,10 @@ class MyRecipeListNotifier extends ChangeNotifier {
   }
 
   MyRecipeListNotifier() {
-    loadMyRecipes();
+    loadMyRecipesNotifier();
   }
 
-  Future<void> loadMyRecipes() async {
+  Future<void> loadMyRecipesNotifier() async {
     isLoading = true;
     notifyListeners();
 
@@ -27,6 +27,46 @@ class MyRecipeListNotifier extends ChangeNotifier {
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<void> addMyRecipeNotifier(MyRecipe newRecipe) async {
+    try {
+      String newId = await createMyRecipe(newRecipe);
+      MyRecipe myRecipeCopy = newRecipe.copyMyRecipe(newId);
+
+      _myRecipes.add(myRecipeCopy);
+
+      notifyListeners();
+    } catch (e) {
+      print("Erro ao adicionar receita: $e");
+    }
+  }
+
+  Future<void> removeMyRecipeNotifier(String myrecipeId) async {
+    try {
+      await deleteMyRecipe(myrecipeId);
+
+      _myRecipes.removeWhere((el) => el.id == myrecipeId);
+
+      notifyListeners();
+    } catch (e) {
+      print("Erro ao deletar receita: $e");
+    }
+  }
+
+  Future<void> updateMyRecipeNotifier(MyRecipe updateRecipe) async {
+    try {
+      await updateMyRecipe(updateRecipe);
+
+      int index = _myRecipes.indexWhere((el) => el.id == updateRecipe.id);
+
+      if (index != -1) {
+        _myRecipes[index] = updateRecipe;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Erro ao atualizar receita: $e");
     }
   }
 }
